@@ -12,7 +12,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound/>} />   {/* <- real 404 */}
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </main>
       <footer className="footer">
