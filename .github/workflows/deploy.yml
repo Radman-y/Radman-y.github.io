@@ -48,6 +48,9 @@ jobs:
           BASE_PATH: ${{ env.BASE_PATH }}
         run: npm run build
 
+      - name: Add SPA fallback (clean URLs)
+        run: cp dist/index.html dist/404.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
