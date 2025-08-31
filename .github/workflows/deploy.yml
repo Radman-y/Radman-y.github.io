@@ -30,9 +30,22 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Build (custom domain uses root path)
+      - name: Compute BASE_PATH
+        id: base
+        run: |
+          REPO="${{ github.repository }}"
+          NAME="${REPO#*/}"
+          LOWER=$(echo "$NAME" | tr '[:upper:]' '[:lower:]')
+          if [[ "$LOWER" == *".github.io" ]]; then
+            echo "BASE_PATH=/" >> "$GITHUB_ENV"
+          else
+            echo "BASE_PATH=/$NAME/" >> "$GITHUB_ENV"
+          fi
+          echo "Using BASE_PATH=$BASE_PATH"
+
+      - name: Build
         env:
-          BASE_PATH: /
+          BASE_PATH: ${{ env.BASE_PATH }}
         run: npm run build
 
       - name: Add SPA fallback (clean URLs)
